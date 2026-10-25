@@ -6,7 +6,7 @@
   const buttons = [...root.querySelectorAll('[data-hero-view]')];
   const caption = root.querySelector('[data-hero-caption]');
   const views = {
-    real: { src: 'assets/aerial-podzim-retus.webp', caption: 'Skutečná fotografie s podzimní retuší a orientačním zákresem.', alt: 'Skutečný pozemek v Pitkovicích s orientačním zákresem čtyř parcel' },
+    real: { src: 'assets/aerial-podzim-retus.webp', caption: 'Skutečná fotografie · vyznačená vnější hranice nabízeného celku.', alt: 'Skutečný pozemek v Pitkovicích s orientační vnější hranicí nabízeného celku' },
     one: { src: 'assets/B-01-0095.webp', caption: 'Ilustrace jednoho domu s velkou zahradou. Rozsah nabízeného celku zůstává vyznačený.', alt: 'Ilustrace jednoho domu na pozemku s orientačním zákresem' },
     three: { src: 'assets/E-02-0095.webp', caption: 'Ilustrace tří domů pro představu o využití prostoru. Jejich realizovatelnost vyžaduje ověření.', alt: 'Ilustrace tří domů na pozemku s orientačním zákresem' }
   };
@@ -15,14 +15,15 @@
     current = button.dataset.heroView;
     const view = views[current];
     images.forEach(image => setResponsive(image, view.src));
-    land.style.setProperty('--hero-clip', `url(#hero-parcels-${current})`);
     land.querySelector('.hero-boundaries g').setAttribute('mask', `url(#hero-lines-${current})`);
     images[0].alt = view.alt;
     caption.textContent = view.caption;
     buttons.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
   }));
-  root.querySelector('[data-mute-surroundings]').addEventListener('change', event => {
-    land.classList.toggle('unmuted', !event.target.checked);
+  const preview = root.querySelector('[data-hero-preview]');
+  preview.addEventListener('click', () => {
+    root.querySelector('[data-hero-view="one"]').click();
+    land.scrollIntoView({ block: 'nearest', behavior: 'instant' });
   });
   const dialog = document.getElementById('hero-dialog');
   const enlarge = root.querySelector('[data-hero-enlarge]');

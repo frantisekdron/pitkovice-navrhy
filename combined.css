@@ -20,12 +20,11 @@
 .hero-switch button:hover{border-color:var(--line)}
 .hero-land{position:relative;isolation:isolate;overflow:hidden;aspect-ratio:3/2;border-radius:6px 72px 6px 6px;background:#718174}
 .hero-land>img{width:100%;height:100%;position:absolute;inset:0;object-fit:fill;transition:filter .25s}
-.hero-land>.hero-context{filter:saturate(.38) brightness(.79)}
-.hero-land>.hero-focus{clip-path:var(--hero-clip,url(#hero-parcels-real));z-index:1}
+.hero-land>.hero-context{filter:none}
 .hero-land.unmuted>.hero-context{filter:none}
 .hero-defs{position:absolute}
 .hero-boundaries{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none}
-.hero-boundaries polygon{fill:none;stroke:#f7dfa0;stroke-width:1.4px;vector-effect:non-scaling-stroke;stroke-linejoin:round;filter:drop-shadow(0 1px 1px #26301d)}
+.hero-boundaries .hero-outline{fill:none;stroke:#fff3cc;stroke-width:1.8px;vector-effect:non-scaling-stroke;stroke-linejoin:round;filter:drop-shadow(0 1px 1px #26301d)}
 .hero-marker{position:absolute;top:22px;left:20px;z-index:3;background:#223b31e8;color:#f7f9f5;padding:10px 14px;border-radius:3px;font-size:11px;line-height:1.5}
 .hero-marker small{display:block;font-size:10px;color:#d4e2d4}
 .hero-enlarge{position:absolute;bottom:15px;right:15px;z-index:3;border:1px solid #fff8;background:#223b31dc;color:white;border-radius:3px;font-size:11px;padding:9px 13px}
@@ -96,3 +95,44 @@
 .atlas.v3.combined .contact .light{background:#e4eddf;color:#223b31;border:0}
 .atlas.v3.combined .planning-finale{--pl-ink:#223b31;--pl-muted:#5b6c60;--pl-paper:#f7f9f5;--pl-line:#d5dfd5;--pl-accent:#52745b;background:#edf2eb!important}
 .atlas.v3.combined .dialog{background:#f7f9f5;color:#223b31}
+
+/* A colour photograph and a visible architectural invitation, 25 October. */
+.hero-composition{position:relative}
+.hero-switch{margin:16px 0 0}
+.hero-caption{margin-top:10px}
+.hero-caption p{max-width:none;min-height:0}
+.hero-marker small{color:#e4eddf}
+.hero-connector{position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none;fill:#fff3cc;filter:drop-shadow(0 1px 2px #182f26)}
+.hero-connector path{fill:none;stroke:#fff3cc;stroke-width:1.4;vector-effect:non-scaling-stroke;stroke-linecap:round;stroke-linejoin:round}
+.hero-vision-card{position:absolute;right:2.8%;bottom:11%;z-index:4;width:29%;max-width:280px;padding:4px;border:0;border-radius:4px;background:var(--paper);color:var(--ink);text-align:left;box-shadow:0 8px 30px #142d2640;cursor:pointer;transition:transform .2s}
+.hero-vision-card>img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:2px}
+.hero-vision-copy{display:block;padding:12px 12px 9px}
+.hero-vision-copy small{display:block;font-size:8px;letter-spacing:.11em;color:var(--muted)}
+.hero-vision-copy strong{display:block;font:clamp(19px,1.7vw,26px)/1.08 var(--serif);letter-spacing:-.035em;margin:7px 0 11px}
+.hero-vision-copy>span{display:flex;align-items:center;justify-content:space-between;gap:6px;font-size:10px}
+.hero-vision-copy b{font-size:17px;font-weight:400}
+.hero-vision-card:hover{transform:translateY(-3px)}
+.hero-vision-card:focus-visible{outline:3px solid var(--ink);outline-offset:5px}
+@media(max-width:1000px){
+ .hero-vision-card{position:relative;right:auto;bottom:auto;display:grid;grid-template-columns:180px 1fr;width:100%;max-width:none;margin-top:12px;border:1px solid var(--line);box-shadow:none;padding:4px;gap:8px}
+ .hero-vision-card>img{height:auto;align-self:center;object-fit:contain}
+ .hero-vision-copy{padding:12px}.hero-vision-copy strong{font-size:25px;margin:7px 0}.hero-vision-copy strong br{display:none}
+ .hero-connector{display:none}
+}
+@media(max-width:800px){
+ .combined-opening{display:grid;grid-template-columns:minmax(0,1fr);gap:0;margin-top:20px}
+ .combined-copy{display:contents}
+ .combined-copy .eyebrow{order:0;grid-column:auto;margin-bottom:10px;font-size:9px}
+ .combined-copy h1{order:1;grid-row:auto;font-size:clamp(36px,10.8vw,58px);line-height:1.03}
+ .combined-copy h1 br:nth-child(2){display:none}
+ .hero-property{order:2;margin-top:22px}
+ .combined-copy>p{order:3;max-width:none;font-size:15px;line-height:1.6;margin:24px 0 14px}
+ .combined-copy>.textlink{order:4;font-size:13px;justify-self:start}
+ .combined-fact{order:5;margin-top:20px}
+ .hero-land{border-top-right-radius:35px}
+ .hero-vision-card{grid-template-columns:min(36%,180px) 1fr;gap:5px;margin-top:9px}
+ .hero-vision-copy{padding:8px 7px}.hero-vision-copy strong{font-size:23px;margin:6px 0}.hero-vision-copy>span{font-size:10px}.hero-vision-copy small{font-size:8px}
+ .hero-switch{margin-top:12px}.hero-switch button{min-height:40px}
+ .hero-caption p{font-size:10px}.hero-caveat{font-size:10px;margin-top:6px}
+}
+@media(prefers-reduced-motion:reduce){.hero-vision-card{transition:none}}
