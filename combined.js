@@ -30,6 +30,7 @@
   enlarge.addEventListener('click', () => {
     const clone = land.cloneNode(true);
     clone.removeAttribute('data-hero-land');
+    clone.querySelectorAll('img').forEach(image => { image.sizes = 'min(95vw, 111vh, 1200px)'; });
     clone.querySelector('.hero-defs').remove();
     clone.querySelector('[data-hero-enlarge]').remove();
     dialog.querySelector('[data-hero-dialog-content]').replaceChildren(clone);

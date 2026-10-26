@@ -21,3 +21,46 @@ qa('.fd-film').forEach(frame=>{
   },{once:true});
 });
 qa('[data-boundary]').forEach(frame=>{const im=q('.boundary-picture img',frame);qa('[data-boundary-view]',frame).forEach(b=>b.addEventListener('click',()=>{const top=b.dataset.boundaryView==='top';setResponsive(im,'assets/outline-'+(top?'top':'main')+'.webp');im.alt='Orientační zákres nabízeného souboru pozemků, '+(top?'pohled shora':'šikmý pohled');qa('[data-boundary-view]',frame).forEach(x=>x.setAttribute('aria-pressed',String(x===b)));}));q('[data-boundary-zoom]',frame).addEventListener('click',()=>openPhoto(im.dataset.full||im.src,im.alt+' · nejde o geodetické zaměření'));});
+
+
+// Fetch the optional planner only when the visitor approaches its section.
+document.querySelectorAll('[data-planner-script]').forEach(root => {
+  let loading = false;
+  let loaded = false;
+  let observer;
+  let retry;
+  const load = () => {
+    if (loading || loaded) return;
+    loading = true;
+    retry?.remove();
+    root.setAttribute('aria-busy', 'true');
+    const script = document.createElement('script');
+    script.src = root.dataset.plannerScript;
+    script.onload = () => {
+      loaded = true;
+      loading = false;
+      observer?.disconnect();
+      root.removeEventListener('focusin', load);
+    };
+    script.onerror = () => {
+      loading = false;
+      script.remove();
+      root.setAttribute('aria-busy', 'false');
+      retry = document.createElement('button');
+      retry.type = 'button';
+      retry.className = 'btn';
+      retry.textContent = 'Editor se nenačetl. Zkusit znovu';
+      retry.addEventListener('click', load);
+      root.prepend(retry);
+    };
+    document.head.append(script);
+  };
+  root.addEventListener('focusin', load);
+  if (typeof IntersectionObserver === 'undefined') load();
+  else {
+    observer = new IntersectionObserver(entries => {
+      if (entries.some(entry => entry.isIntersecting)) load();
+    }, { rootMargin: '1000px 0px' });
+    observer.observe(root);
+  }
+});
