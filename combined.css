@@ -136,3 +136,33 @@
  .hero-caption p{font-size:10px}.hero-caveat{font-size:10px;margin-top:6px}
 }
 @media(prefers-reduced-motion:reduce){.hero-vision-card{transition:none}}
+
+/* Agency artwork supplied by Jana Bauerova, 31 October 2026. */
+.combined .brand-lockup{display:flex;align-items:center;gap:24px;min-width:0}
+.combined .agency-mark{display:flex;align-items:center;flex-shrink:0;border-left:1px solid var(--line);padding-left:24px}
+.combined .agency-mark img{display:block;width:100px;height:auto}
+.combined .agency-mark:focus-visible{outline:2px solid var(--ink);outline-offset:6px}
+.combined .contact-agency{display:inline-block;background:#fff;padding:15px 20px;border-radius:5px;margin:0 0 26px}
+.combined .contact-agency img{display:block;width:176px;max-width:100%;height:auto}
+@media(max-width:1000px){
+ .combined .brand-lockup{gap:18px}
+ .combined .agency-mark{padding-left:18px}
+ .combined .agency-mark img{width:88px}
+}
+@media(max-width:600px){
+ .combined .nav{gap:12px}
+ .combined .brand-lockup{gap:12px}
+ .combined .brand{font-size:23px}
+ .combined .brand small{font-size:7px;line-height:1.4;letter-spacing:.08em;max-width:140px}
+ .combined .agency-mark{padding-left:12px}
+ .combined .agency-mark img{width:72px}
+ .combined .menu-toggle{padding:9px 10px}
+ .combined .contact-agency{margin-bottom:22px}
+}
+@media(max-width:360px){
+ .combined .nav,.combined .brand-lockup{gap:8px}
+ .combined .brand{font-size:20px}
+ .combined .brand small{font-size:6px;max-width:120px}
+ .combined .agency-mark{padding-left:8px}
+ .combined .agency-mark img{width:62px}
+}
