@@ -4,16 +4,12 @@
   const video = stage.querySelector('video');
   const toggle = stage.querySelector('[data-hero-film-toggle]');
   const label = toggle.querySelector('.hero-film-toggle-label');
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
   const safari = /Safari/.test(navigator.userAgent) && !/Chrome|Chromium|Android|Edg|OPR/.test(navigator.userAgent);
   let visible = true;
   let userPaused = false;
-  let manualPlay = false;
   let ready = false;
   let sourceKey = '';
   let resizeTimer;
-  const automaticAllowed = () => !reduced.matches && !connection?.saveData && !/^(slow-)?2g$/.test(connection?.effectiveType || '');
   const asset = name => new URL(`${stage.dataset.videoBase}-${name}`, location.hostname === 'frantisekdron.github.io' ? 'https://pozemekpitkovice.cz/' : document.baseURI).href;
   const mode = () => innerWidth <= 600 ? 'mobile' : innerWidth <= 1024 ? 'tablet' : 'desktop';
 
@@ -42,7 +38,8 @@
     video.load();
   }
   function reconcile() {
-    if (!ready || userPaused || document.hidden || !visible || (!manualPlay && !automaticAllowed())) {
+    video.autoplay = ready && !userPaused && !document.hidden && visible;
+    if (!video.autoplay) {
       video.pause();
       return;
     }
@@ -53,14 +50,12 @@
   toggle.hidden = false;
   toggle.addEventListener('click', () => {
     if (!video.paused) { userPaused = true; video.pause(); }
-    else { userPaused = false; manualPlay = true; ready = true; reconcile(); }
+    else { userPaused = false; ready = true; reconcile(); }
   });
   video.addEventListener('playing', () => { stage.classList.add('has-frame'); updateButton(); });
   video.addEventListener('pause', updateButton);
   video.addEventListener('error', () => { stage.classList.remove('has-frame', 'is-playing'); updateButton(); });
   document.addEventListener('visibilitychange', reconcile);
-  reduced.addEventListener?.('change', () => { manualPlay = false; reconcile(); });
-  connection?.addEventListener?.('change', reconcile);
   if ('IntersectionObserver' in window) new IntersectionObserver(entries => {
     visible = entries[0].isIntersecting;
     reconcile();
@@ -70,10 +65,10 @@
   addEventListener('orientationchange', onResize);
   function schedule() {
     const start = () => { ready = true; reconcile(); };
-    if ('requestIdleCallback' in window) requestIdleCallback(start, {timeout: 1800});
-    else setTimeout(start, 350);
+    if ('requestIdleCallback' in window) requestIdleCallback(start, {timeout: 500});
+    else setTimeout(start, 100);
   }
-  if (document.readyState === 'complete') schedule();
-  else addEventListener('load', schedule, {once:true});
+  if (document.readyState === 'loading') addEventListener('DOMContentLoaded', schedule, {once:true});
+  else schedule();
   updateButton();
 })();
