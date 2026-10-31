@@ -11,7 +11,9 @@
   let sourceKey = '';
   let resizeTimer;
   const asset = name => new URL(`${stage.dataset.videoBase}-${name}`, location.hostname === 'frantisekdron.github.io' ? 'https://pozemekpitkovice.cz/' : document.baseURI).href;
-  const mode = () => innerWidth <= 600 ? 'mobile' : innerWidth <= 1024 ? 'tablet' : 'desktop';
+  const mode = () => innerWidth <= 800
+    ? (innerWidth <= 600 ? 'mobile' : 'tablet')
+    : (stage.clientWidth <= 440 ? 'mobile' : 'tablet');
 
   function updateButton() {
     const playing = !video.paused && !video.ended;
