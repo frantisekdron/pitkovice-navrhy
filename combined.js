@@ -20,7 +20,16 @@
     caption.textContent = view.caption;
     buttons.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
   }));
-  const preview = root.querySelector('[data-hero-preview]');
+  const preview = document.querySelector('[data-hero-preview]');
+  const mobileSlot = document.querySelector('[data-hero-vision-slot]');
+  const mobileLayout = matchMedia('(max-width: 800px)');
+  const placePreview = () => {
+    const target = mobileLayout.matches && mobileSlot ? mobileSlot : root.querySelector('.hero-composition');
+    if (preview.parentElement !== target) target.append(preview);
+    preview.querySelector('img').loading = mobileLayout.matches ? 'eager' : 'lazy';
+  };
+  placePreview();
+  mobileLayout.addEventListener('change', placePreview);
   preview.addEventListener('click', () => {
     root.querySelector('[data-hero-view="one"]').click();
     land.scrollIntoView({ block: 'nearest', behavior: 'instant' });
